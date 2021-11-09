@@ -2,6 +2,7 @@ import React from "react";
 import { ImageModal } from "./Modal/ImageModal";
 import { TextModal } from "./Modal/TextModal";
 import styled from "@emotion/styled";
+import List from "./List/List";
 
 const Container = styled.section``;
 
@@ -17,6 +18,7 @@ const Main = () => {
         <TextModal />
         <ImageModal />
       </Wrapper>
+      <List />
     </Container>
   );
 };

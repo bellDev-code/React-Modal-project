@@ -1,9 +1,9 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import styled from "@emotion/styled";
+import useInput from "../../Hooks/useInput";
 
 const style = {
   position: "absolute",
@@ -26,10 +26,19 @@ const Wrapper = styled.div`
   flex-direction: column;
 `;
 
+const Input = styled.input`
+  padding: 10px;
+`;
+
 export const TextModal = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const title = useInput();
+  const contents = useInput();
+
+  console.log(title, contents);
 
   return (
     <div>
@@ -41,15 +50,27 @@ export const TextModal = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
+          <h2>Text Memo</h2>
+          <br />
           <Wrapper>
-            <Title>title</Title>
-            <input type="text"></input>
-            <Title>Contents</Title>
-            <input type="text"></input>
+            <label>Title</label>
+            <Input
+              type="text"
+              name="title"
+              value={title.value}
+              onChange={title.onChange}
+            ></Input>
           </Wrapper>
+          <Wrapper>
+            <Title>Contents</Title>
+            <Input
+              type="text"
+              name="contents"
+              value={contents.value}
+              onChange={contents.onChange}
+            ></Input>
+          </Wrapper>
+          <button>추가하기</button>
         </Box>
       </Modal>
     </div>
