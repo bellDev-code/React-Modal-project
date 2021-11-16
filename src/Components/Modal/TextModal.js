@@ -1,9 +1,10 @@
-import * as React from "react";
+import React, { useState, useContext } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import styled from "@emotion/styled";
 import useInput from "../../Hooks/useInput";
+import { UseNoteContext } from "../../Hooks/useContext";
 
 const style = {
   position: "absolute",
@@ -17,23 +18,29 @@ const style = {
   p: 4,
 };
 
-const Title = styled.div`
-  padding-right: 20px;
-`;
-
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: column;
 `;
+
+const Title = styled.div``;
+
+const CloseBtn = styled.button``;
 
 const Input = styled.input`
   padding: 10px;
 `;
 
+const Contents = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const TextModal = () => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const { addTextOnSubmit } = useContext(UseNoteContext);
 
   const title = useInput();
   const contents = useInput();
@@ -43,34 +50,33 @@ export const TextModal = () => {
   return (
     <div>
       <Button onClick={handleOpen}>Memo</Button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
+      <Modal open={open}>
         <Box sx={style}>
-          <h2>Text Memo</h2>
-          <br />
           <Wrapper>
-            <label>Title</label>
-            <Input
-              type="text"
-              name="title"
-              value={title.value}
-              onChange={title.onChange}
-            ></Input>
+            <Title>Text Memo</Title>
+            <CloseBtn onClick={handleClose}>닫기</CloseBtn>
           </Wrapper>
-          <Wrapper>
-            <Title>Contents</Title>
-            <Input
-              type="text"
-              name="contents"
-              value={contents.value}
-              onChange={contents.onChange}
-            ></Input>
-          </Wrapper>
-          <button>추가하기</button>
+          <form onSubmit={addTextOnSubmit}>
+            <Contents>
+              <label>Title</label>
+              <Input
+                type="text"
+                name="title"
+                value={title.value}
+                onChange={title.onChange}
+              ></Input>
+            </Contents>
+            <Contents>
+              <Title>Contents</Title>
+              <Input
+                type="text"
+                name="contents"
+                value={contents.value}
+                onChange={contents.onChange}
+              ></Input>
+            </Contents>
+            <button>추가하기</button>
+          </form>
         </Box>
       </Modal>
     </div>
