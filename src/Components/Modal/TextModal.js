@@ -45,7 +45,7 @@ export const TextModal = () => {
   const title = useInput();
   const contents = useInput();
 
-  console.log(title, contents);
+  // console.log(title, contents);
 
   return (
     <div>

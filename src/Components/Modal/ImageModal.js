@@ -1,8 +1,10 @@
-import * as React from "react";
+import React, { useContext, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import styled from "@emotion/styled";
+import useInput from "../../Hooks/useInput";
+import { UseNoteContext } from "../../Hooks/useContext";
 
 const style = {
   position: "absolute",
@@ -16,27 +18,65 @@ const style = {
   p: 4,
 };
 
+const Wrapper = styled.div`
+  display: flex;
+`;
+
+const Title = styled.div``;
+
+const CloseBtn = styled.button``;
+
+const Input = styled.input`
+  padding: 10px;
+`;
+
+const Contents = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const ImageModal = () => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const { addImageUrlOnSubmit } = useContext(UseNoteContext);
+
+  const title = useInput();
+  const imgUrl = useInput();
+
+  console.log(title, imgUrl);
+
   return (
     <div>
-      <Button onClick={handleOpen}>Image</Button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
+      <Button onClick={handleOpen}>IMAGE</Button>
+      <Modal open={open}>
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
+          <Wrapper>
+            <Title>Image URL</Title>
+            <CloseBtn onClick={handleClose}>닫기</CloseBtn>
+          </Wrapper>
+          <form onSubmit={addImageUrlOnSubmit}>
+            <Contents>
+              <label>Title</label>
+              <Input
+                type="text"
+                name="title"
+                value={title.value}
+                onChange={title.onChange}
+              ></Input>
+            </Contents>
+            <Contents>
+              <label>URL</label>
+              <Input
+                type="text"
+                name="imgUrl"
+                value={imgUrl.value}
+                onChange={imgUrl.onChange}
+              ></Input>
+            </Contents>
+            <button>추가하기</button>
+          </form>
         </Box>
       </Modal>
     </div>

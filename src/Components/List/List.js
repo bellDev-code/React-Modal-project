@@ -1,20 +1,30 @@
 import React, { useContext } from "react";
 import { UseNoteContext } from "../../Hooks/useContext";
+import styled from "@emotion/styled";
+
+const Container = styled.div``;
+
+const Wrapper = styled.div`
+  display: flex;
+`;
 
 const List = () => {
   const { note } = useContext(UseNoteContext);
   return (
-    <div>
-      리스트 입니다.
+    <Container>
+      메모장
       {note.map((item, index) => {
         return (
-          <div key={index}>
+          <Wrapper key={index}>
             <div>{item.title}</div>
             <div>{item.contents}</div>
-          </div>
+            <div>{item.imageTitle}</div>
+            <div>{item.imgUrl}</div>
+            <button>삭제</button>
+          </Wrapper>
         );
       })}
-    </div>
+    </Container>
   );
 };
 

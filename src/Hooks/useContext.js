@@ -2,13 +2,7 @@ import React, { createContext, useState } from "react";
 
 export const UseNoteContext = createContext(undefined);
 
-const noteData = [
-  {
-    id: null,
-    title: "",
-    contents: "",
-  },
-];
+const noteData = [];
 
 export const UseNoteContextProvider = ({ children }) => {
   const [note, setNote] = useState(noteData);
@@ -19,17 +13,19 @@ export const UseNoteContextProvider = ({ children }) => {
     const title = event.target[0].value;
     const contents = event.target[1].value;
 
-    console.log(title, contents);
-
     addNote(title, contents);
   };
 
-  const addNote = (title, contents) => {
+  const addNote = (title, contents, imageTitle, imgUrl) => {
     const text = {
       id: note.length,
       title: title,
       contents: contents,
+      imageTitle: imageTitle,
+      imgUrl: imgUrl,
     };
+
+    console.log(text);
 
     const newNote = [...note, text];
 
@@ -37,6 +33,16 @@ export const UseNoteContextProvider = ({ children }) => {
 
     setNote(newNote);
   };
+
+  const addImageUrlOnSubmit = (event) => {
+    event.preventDefault();
+
+    const imageTitle = event.target[0].value;
+    const imgUrl = event.target[1].value;
+
+    addNote(imageTitle, imgUrl);
+  };
+
   return (
     <UseNoteContext.Provider
       value={{
@@ -44,6 +50,7 @@ export const UseNoteContextProvider = ({ children }) => {
         note: note,
         addTextOnSubmit: addTextOnSubmit,
         addNote: addNote,
+        addImageUrlOnSubmit: addImageUrlOnSubmit,
       }}
     >
       {children}

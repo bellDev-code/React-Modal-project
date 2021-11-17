@@ -18,7 +18,9 @@ const Main = () => {
         <TextModal />
         <ImageModal />
       </Wrapper>
-      <List />
+      <Wrapper>
+        <List />
+      </Wrapper>
     </Container>
   );
 };
